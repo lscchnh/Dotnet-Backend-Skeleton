@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  backendskeleton:
+    image: ${DOCKER_REGISTRY-}backendskeleton
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - Application__Name=Application
+      - ASPNETCORE_URLS=http://+:80
+      - Application__ConnectionString=${APPLICATION_CONNECTION_STRING}
+      - Application__HttpClientAddress=${APPLICATION_HTTP_CLIENT_ADDRESS}
+    ports:
+      - "80"
