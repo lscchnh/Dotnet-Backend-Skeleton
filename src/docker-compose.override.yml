@@ -1,11 +1,9 @@
 version: '3.4'
 
 services:
-  backendskeleton:
+  backend-skeleton:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - Application__ConnectionString=${APPLICATION_CONNECTION_STRING}
-      - Application__HttpClientAddress=${APPLICATION_HTTP_CLIENT_ADDRESS}
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

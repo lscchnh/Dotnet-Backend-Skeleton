@@ -1,11 +1,13 @@
 using BackendSkeleton.Extensions;
+using BackendSkeleton.Metrics;
+using BackendSkeleton.Middlewares;
 using BackendSkeleton.Options;
 using BackendSkeleton.Services;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 using Serilog;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -23,17 +25,10 @@ builder.Services.AddControllers(options =>
 	options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-Log.Logger = new LoggerConfiguration()
-	.WriteTo.Console()
-	.CreateBootstrapLogger();
-
 builder.Services.AddProblemDetails(opts =>
 {
-	opts.OnBeforeWriteDetails = ((ctx, pr) =>
-	{
-		pr.Instance = $"{ctx.Request.Path}{ctx.Request.QueryString}";
-		Log.Error(pr.Detail);
-	});
+	opts.MapExceptionsToProblemDetails();
+	opts.EnrichWithInstance();
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -45,13 +40,14 @@ builder.Services.AddSwaggerGen(opt =>
 	}
 );
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddSingleton<MetricCollector>();
 
 builder.Host.UseSerilog((ctx, lc) => lc
 		.WriteTo.Console()
 		.ReadFrom.Configuration(ctx.Configuration));
 
 // Options configuration
-builder.Services.ConfigureApplicationOptions<ApplicationOptions>(ApplicationOptions.Application);
+builder.Services.ConfigureOptions<ApplicationOptions>(ApplicationOptions.Application);
 
 builder.Services.AddHealthChecks();
 
@@ -66,20 +62,25 @@ app.UseSerilogRequestLogging();
 
 app.UseProblemDetails();
 
-app.UseSwagger();
+app.UseSwagger(c =>
+{
+	c.PreSerializeFilters.Add((swagger, httpReq) =>
+	{
+		swagger.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}", Description = httpReq.Host.Value.Contains("localhost", StringComparison.OrdinalIgnoreCase) ? "Local development environment" : "Production environment" } };
+	});
+});
+
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend Skeleton"));
 
+app.UseMetricServer();
+app.UseHttpMetrics();
+
 app.MapControllers();
+app.MapMetrics();
 
-app.MapHealthChecks("/health/ready", new HealthCheckOptions()
-{
-	Predicate = (check) => check.Tags.Contains("ready"),
-});
+app.MapHealthChecks();
 
-app.MapHealthChecks("/health/live", new HealthCheckOptions()
-{
-	Predicate = (_) => false
-});
+app.UseMiddleware<ResponseMetricMiddleware>();
 
 Log.Information("Starting service...");
 

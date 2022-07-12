@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  backendskeleton:
-    image: ${DOCKER_REGISTRY-}backendskeleton
+  backend-skeleton:
+    image: backend-skeleton:1.0
+    container_name: backend-skeleton
     build:
       context: .
-      dockerfile: Dockerfile
     environment:
       - Application__Name=Application
       - ASPNETCORE_URLS=http://+:80

@@ -1,9 +1,12 @@
 ﻿using BackendSkeleton.Models;
 
-namespace BackendSkeleton.Services
+namespace BackendSkeleton.Services;
+
+public interface IWeatherForecastService
 {
-	public interface IWeatherForecastService
-	{
-		public IEnumerable<WeatherForecast> GetWeather();
-	}
+	/// <summary>
+	/// Gets the weather forecast.
+	/// </summary>
+	/// <returns>Enumerable of WeatherForecast instances.</returns>
+	public IEnumerable<WeatherForecast> GetWeather();
 }
