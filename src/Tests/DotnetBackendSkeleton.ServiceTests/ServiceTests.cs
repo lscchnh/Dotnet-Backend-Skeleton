@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace BackendSkeleton.ServiceTests
+namespace DotnetBackendSkeleton.ServiceTests
 {
 	[TestClass]
 	public class ServiceTests : TestBase

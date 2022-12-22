@@ -134,10 +134,10 @@ The settings the app needs to run are represented in `appsettings.json` and over
 In .NET, these settings are bound to an instance of a POCO class in a dedicated `Options` repertory. To make the binding and validate the options, we create a generic extension class (in a dedicated `Extensions` repertory) like the following :
 
 ```
-using BackendSkeleton.Options;
+using DotnetBackendSkeleton.Options;
 using Microsoft.Extensions.Options;
 
-namespace BackendSkeleton.Extensions
+namespace DotnetBackendSkeleton.Extensions
 {
  public static class ServiceCollectionExtensions
  {

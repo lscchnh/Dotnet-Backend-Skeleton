@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendSkeleton", "BackendSkeleton.csproj", "{A63ED4FA-7459-470A-9F8E-E03F2E2500AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetBackendSkeleton", "DotnetBackendSkeleton.csproj", "{A63ED4FA-7459-470A-9F8E-E03F2E2500AC}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8A514340-D413-4F7C-A77F-48706CBBD381}"
 EndProject
@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CA0F9706
 		test.runsettings = test.runsettings
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendSkeleton.UnitTests", "Tests\BackendSkeleton.UnitTests\BackendSkeleton.UnitTests.csproj", "{17615166-29D0-4589-B670-B17234F98941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetBackendSkeleton.UnitTests", "Tests\DotnetBackendSkeleton.UnitTests\DotnetBackendSkeleton.UnitTests.csproj", "{17615166-29D0-4589-B670-B17234F98941}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendSkeleton.ServiceTests", "Tests\BackendSkeleton.ServiceTests\BackendSkeleton.ServiceTests.csproj", "{4C0580DC-CC89-433B-9970-4EF6634DC465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetBackendSkeleton.ServiceTests", "Tests\DotnetBackendSkeleton.ServiceTests\DotnetBackendSkeleton.ServiceTests.csproj", "{4C0580DC-CC89-433B-9970-4EF6634DC465}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

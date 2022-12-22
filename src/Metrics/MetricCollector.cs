@@ -1,7 +1,7 @@
 ﻿using Prometheus;
 using System.Globalization;
 
-namespace BackendSkeleton.Metrics;
+namespace DotnetBackendSkeleton.Metrics;
 public class MetricCollector
 {
 	private readonly Counter _requestCounter;

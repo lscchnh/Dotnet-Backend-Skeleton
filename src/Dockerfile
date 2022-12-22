@@ -4,12 +4,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["BackendSkeleton.csproj", "./"]
-RUN dotnet restore "BackendSkeleton.csproj"
+COPY ["DotnetBackendSkeleton.csproj", "./"]
+RUN dotnet restore "DotnetBackendSkeleton.csproj"
 COPY . .
-RUN dotnet publish "BackendSkeleton.csproj" -c Release -o /app/publish
+RUN dotnet publish "DotnetBackendSkeleton.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "BackendSkeleton.dll"]
+ENTRYPOINT ["dotnet", "DotnetBackendSkeleton.dll"]

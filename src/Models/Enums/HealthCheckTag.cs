@@ -1,4 +1,4 @@
-﻿namespace BackendSkeleton.Models.Enums;
+﻿namespace DotnetBackendSkeleton.Models.Enums;
 
 public enum HealthCheckTag
 {

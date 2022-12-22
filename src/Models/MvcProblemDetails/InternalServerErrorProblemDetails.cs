@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
-namespace BackendSkeleton.Models.MvcProblemDetails
+namespace DotnetBackendSkeleton.Models.MvcProblemDetails;
+
+public class InternalServerErrorProblemDetails : ProblemDetails
 {
-	internal class InternalServerErrorProblemDetails : ProblemDetails
+	public InternalServerErrorProblemDetails(string detail)
 	{
-		private string message;
-
-		public InternalServerErrorProblemDetails(string message)
-		{
-			this.message = message;
-		}
+		Detail = detail;
+		Status = (int)HttpStatusCode.InternalServerError;
+		Title = "Internal Server Error";
+		Type = "https://httpstatuses.com/500";
 	}
 }

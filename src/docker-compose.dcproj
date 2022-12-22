@@ -6,7 +6,7 @@
     <ProjectGuid>8a514340-d413-4f7c-a77f-48706cbbd381</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>backend-skeleton</DockerServiceName>
+    <DockerServiceName>dotnet-backend-skeleton</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

@@ -1,7 +1,7 @@
-﻿using BackendSkeleton.Metrics;
+﻿using DotnetBackendSkeleton.Metrics;
 using System.Diagnostics;
 
-namespace BackendSkeleton.Middlewares;
+namespace DotnetBackendSkeleton.Middlewares;
 public class ResponseMetricMiddleware
 {
 	private readonly RequestDelegate _request;

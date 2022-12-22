@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 
-namespace BackendSkeleton.ServiceTests
+namespace DotnetBackendSkeleton.ServiceTests
 {
 	[TestClass]
 	public class TestBase
@@ -23,7 +23,7 @@ namespace BackendSkeleton.ServiceTests
 				$"APPLICATION_CONNECTION_STRING=connectionstring",
 				$"APPLICATION_HTTP_CLIENT_ADDRESS={(string)testContext.Properties["webAppUrl"]}"
 			};
-			var serviceName = "backendskeleton";
+			var serviceName = "DotnetBackendSkeleton";
 			_dockerCompositeService = new Ductus.FluentDocker.Builders.Builder()
 						.UseContainer()
 						.UseCompose()

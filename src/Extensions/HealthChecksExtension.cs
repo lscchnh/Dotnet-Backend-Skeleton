@@ -1,14 +1,18 @@
-﻿using BackendSkeleton.Models.Enums;
+﻿using DotnetBackendSkeleton.HealthChecks;
+using DotnetBackendSkeleton.Models.Enums;
+using DotnetBackendSkeleton.Repositories;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-namespace BackendSkeleton.Extensions
+namespace DotnetBackendSkeleton.Extensions
 {
 	public static class HealthChecksExtension
 	{
 		public static IHealthChecksBuilder AddApplicativeHealthChecks(this IHealthChecksBuilder builder)
 		{
 			// Add applicative healthchecks here
-			return builder;
+			return builder
+				.AddCheck<NetCheck>(NetCheck.HealthCheckName, tags: new[] { HealthCheckTag.live.ToString() })
+				.AddDbContextCheck<TodoItemContext>();
 		}
 
 		public static WebApplication MapHealthChecks(this WebApplication app)

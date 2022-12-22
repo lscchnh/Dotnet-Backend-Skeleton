@@ -1,9 +1,9 @@
 version: '3.4'
 
 services:
-  backend-skeleton:
-    image: backend-skeleton:1.0
-    container_name: backend-skeleton
+  dotnet-backend-skeleton:
+    image: dotnet-backend-skeleton:1.0
+    container_name: dotnet-backend-skeleton
     build:
       context: .
     environment:

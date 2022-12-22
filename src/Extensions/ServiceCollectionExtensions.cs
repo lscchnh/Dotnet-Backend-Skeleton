@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace BackendSkeleton.Extensions
+namespace DotnetBackendSkeleton.Extensions
 {
 	public static class ServiceCollectionExtensions
 	{
