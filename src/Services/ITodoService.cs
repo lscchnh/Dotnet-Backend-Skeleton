@@ -1,16 +1,17 @@
 ﻿using DotnetBackendSkeleton.Models;
 
-namespace DotnetBackendSkeleton.Services;
-
-public interface ITodoService
+namespace DotnetBackendSkeleton.Services
 {
-	Task<IEnumerable<TodoItem>> GetTodoItems();
+    public interface ITodoService
+    {
+        IEnumerable<TodoItem> GetTodoItems();
 
-	Task<TodoItem?> GetTodoItem(Guid id);
+        TodoItem? GetTodoItem(Guid id);
 
-	Task<TodoItem> AddTodoItem(TodoItem todoItem);
+        TodoItem AddTodoItem(TodoItem todoItem);
 
-	Task PutTodoItem(Guid id, TodoItem todoItem);
+        void PutTodoItem(Guid id, TodoItem todoItem);
 
-	Task DeleteTodoItem(Guid id);
+        void DeleteTodoItem(Guid id);
+    }
 }
