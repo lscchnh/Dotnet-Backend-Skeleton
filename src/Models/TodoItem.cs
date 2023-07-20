@@ -1,15 +1,11 @@
-using DotnetBackendSkeleton.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using DotnetBackendSkeleton.Models.Enums;
 
 namespace DotnetBackendSkeleton.Models
 {
-	public class TodoItem
-	{
-		public Guid Id { get; set; } = Guid.NewGuid();
-
-		[Required(AllowEmptyStrings = false)]
-		public string Title { get; set; } = string.Empty;
-
-		public Status Status { get; set; } = Status.TODO;
-	}
+    public class TodoItem
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public Status status { get; set; } = Status.TODO;
+    }
 }
