@@ -1,0 +1,88 @@
+# Kubernetes manifests for the API. Adapt the image, namespace, resources and secrets to your platform.
+# Prerequisite: a secret holding the PostgreSQL connection string, e.g.
+#   kubectl create secret generic dotnet-backend-skeleton-db \
+#     --from-literal=connection-string="Host=...;Database=appdb;Username=...;Password=..."
+# Database migrations are applied by the delivery pipeline (see the "migrations" CI artifact), not by the pods.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-backend-skeleton-api
+  labels:
+    app.kubernetes.io/name: dotnet-backend-skeleton-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dotnet-backend-skeleton-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: dotnet-backend-skeleton-api
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: dotnet-backend-skeleton-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Production
+            - name: ConnectionStrings__appdb
+              valueFrom:
+                secretKeyRef:
+                  name: dotnet-backend-skeleton-db
+                  key: connection-string
+            # Send logs, traces and metrics to your OpenTelemetry collector.
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://otel-collector:4317
+            - name: OTEL_SERVICE_NAME
+              value: dotnet-backend-skeleton-api
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          startupProbe:
+            httpGet:
+              path: /alive
+              port: http
+            failureThreshold: 30
+            periodSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: http
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-backend-skeleton-api
+  labels:
+    app.kubernetes.io/name: dotnet-backend-skeleton-api
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: dotnet-backend-skeleton-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

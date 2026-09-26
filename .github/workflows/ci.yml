@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  CONFIGURATION: Release
+
+jobs:
+  build-and-test:
+    name: Build & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: |
+          dotnet restore
+          dotnet tool restore
+
+      - name: Check formatting
+        run: dotnet format --verify-no-changes --no-restore
+
+      - name: Build
+        run: dotnet build --configuration $CONFIGURATION --no-restore
+
+      # Includes the Aspire end-to-end tests: GitHub-hosted Ubuntu runners provide Docker.
+      - name: Test
+        run: >
+          dotnet test --configuration $CONFIGURATION --no-build
+          --report-trx --coverage --coverage-output-format cobertura
+          --results-directory artifacts/test-results
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: artifacts/test-results
+
+      - name: Generate idempotent migration script
+        run: >
+          dotnet ef migrations script --idempotent
+          --project src/DotnetBackendSkeleton.Api
+          --configuration $CONFIGURATION --no-build
+          --output artifacts/migrations/migrations.sql
+
+      - name: Upload migration script
+        uses: actions/upload-artifact@v4
+        with:
+          name: migrations
+          path: artifacts/migrations
+
+  container:
+    name: Container image
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      # Builds the image with the .NET SDK (no Dockerfile). To push it, log in to your registry
+      # and add: -p:ContainerRegistry=<registry> -p:ContainerImageTags='"${{ github.sha }};latest"'
+      - name: Build container image
+        run: >
+          dotnet publish src/DotnetBackendSkeleton.Api
+          --configuration $CONFIGURATION
+          -t:PublishContainer
+          -p:ContainerImageTag=${{ github.sha }}

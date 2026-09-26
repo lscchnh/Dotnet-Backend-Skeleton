@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Louis Cochinho",
+  "classifications": ["Web", "API", "Aspire", "Backend", "Solution"],
+  "identity": "DotnetBackendSkeleton.Template",
+  "name": "Dotnet Backend Skeleton (.NET 10 + Aspire)",
+  "description": "Industrialization-ready backend: ASP.NET Core API, EF Core + PostgreSQL, Aspire AppHost, OpenTelemetry, tests and CI.",
+  "shortName": "backend-skeleton",
+  "sourceName": "DotnetBackendSkeleton",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "forms": {
+    "identifierSafe": {
+      "identifier": "replace",
+      "pattern": "[^A-Za-z0-9_]",
+      "replacement": "_"
+    },
+    "appendAppHost": {
+      "identifier": "replace",
+      "pattern": "$",
+      "replacement": "_AppHost"
+    },
+    "appHostClassName": {
+      "identifier": "chain",
+      "steps": ["identifierSafe", "appendAppHost"]
+    }
+  },
+  "symbols": {
+    "appHostProjectsTypeName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "appHostClassName",
+      "replaces": "DotnetBackendSkeleton_AppHost",
+      "description": "Name of the Projects.* class Aspire generates for the AppHost (used by the AppHost tests)."
+    }
+  },
+  "guids": [
+    "4bc5f522-6add-45c3-a0ba-fc2480354483",
+    "0b5e6a3c-4f1d-4c59-9a58-2d4f3e8c7a61"
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            ".git/**",
+            "**/.vs/**",
+            ".idea/**",
+            ".template.config/**",
+            "**/bin/**",
+            "**/obj/**",
+            "**/TestResults/**",
+            "artifacts/**",
+            "**/*.user"
+          ]
+        }
+      ]
+    }
+  ]
+}

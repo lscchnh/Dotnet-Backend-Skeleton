@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DotnetBackendSkeleton.Api/DotnetBackendSkeleton.Api.csproj" />
+    <Project Path="src/DotnetBackendSkeleton.AppHost/DotnetBackendSkeleton.AppHost.csproj" />
+    <Project Path="src/DotnetBackendSkeleton.ServiceDefaults/DotnetBackendSkeleton.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DotnetBackendSkeleton.AppHost.Tests/DotnetBackendSkeleton.AppHost.Tests.csproj" />
+    <Project Path="tests/DotnetBackendSkeleton.IntegrationTests/DotnetBackendSkeleton.IntegrationTests.csproj" />
+    <Project Path="tests/DotnetBackendSkeleton.UnitTests/DotnetBackendSkeleton.UnitTests.csproj" />
+  </Folder>
+</Solution>

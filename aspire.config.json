@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "src/DotnetBackendSkeleton.AppHost/DotnetBackendSkeleton.AppHost.csproj"
+  }
+}

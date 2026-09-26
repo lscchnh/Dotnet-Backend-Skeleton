@@ -1,0 +1,39 @@
+# Requests for the REST Client of Visual Studio / VS Code / Rider.
+# When running through the AppHost, use the API endpoint shown in the Aspire dashboard.
+@baseUrl = https://localhost:7141
+
+### List todo items
+GET {{baseUrl}}/api/todos
+Accept: application/json
+
+### Create a todo item
+# @name create
+POST {{baseUrl}}/api/todos
+Content-Type: application/json
+
+{
+  "title": "Write the README",
+  "status": "Todo"
+}
+
+### Get the created todo item
+GET {{baseUrl}}/api/todos/{{create.response.body.$.id}}
+Accept: application/json
+
+### Complete the created todo item
+PUT {{baseUrl}}/api/todos/{{create.response.body.$.id}}
+Content-Type: application/json
+
+{
+  "title": "Write the README",
+  "status": "Done"
+}
+
+### Delete the created todo item
+DELETE {{baseUrl}}/api/todos/{{create.response.body.$.id}}
+
+### Health (readiness) and liveness
+GET {{baseUrl}}/health
+
+###
+GET {{baseUrl}}/alive

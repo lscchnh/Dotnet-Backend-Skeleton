@@ -1,0 +1,18 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.5.4">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AspireUseCliBundle>true</AspireUseCliBundle>
+    <UserSecretsId>0b5e6a3c-4f1d-4c59-9a58-2d4f3e8c7a61</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Stable generated type name (Projects.Api), independent of the solution name -->
+    <ProjectReference Include="..\DotnetBackendSkeleton.Api\DotnetBackendSkeleton.Api.csproj" AspireProjectMetadataTypeName="Api" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+  </ItemGroup>
+
+</Project>
