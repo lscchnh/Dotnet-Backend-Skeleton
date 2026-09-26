@@ -17,7 +17,7 @@ sample `Todo` feature, and focus on your domain.
 | Resilience | Standard resilience handler (retry, circuit breaker, timeouts) on every `HttpClient` |
 | Health | `/health` (readiness, includes the database) and `/alive` (liveness) |
 | Configuration | Options pattern with data annotations, validated at startup |
-| Tests | MSTest 4 on Microsoft.Testing.Platform: unit, in-memory integration (no Docker), Aspire end-to-end |
+| Tests | MSTest 4 on Microsoft.Testing.Platform: unit and in-memory integration tests (no Docker needed) |
 | Build | Central package management, SDK pinned in `global.json`, `.slnx` solution, `.editorconfig` enforced in build |
 | Delivery | GitHub Actions CI, Dependabot, container image built by the .NET SDK (chiseled, non-root), Kubernetes manifests |
 
@@ -26,7 +26,7 @@ sample `Todo` feature, and focus on your domain.
 ```text
 .
 ├── src/
-│   ├── DotnetBackendSkeleton.AppHost/          # Aspire orchestration (local dev & tests)
+│   ├── DotnetBackendSkeleton.AppHost/          # Aspire orchestration (local dev)
 │   ├── DotnetBackendSkeleton.ServiceDefaults/  # Shared defaults: OpenTelemetry, health checks, resilience, service discovery
 │   └── DotnetBackendSkeleton.Api/              # The REST API
 │       ├── Controllers/        # HTTP endpoints
@@ -40,8 +40,7 @@ sample `Todo` feature, and focus on your domain.
 │       └── Extensions/
 ├── tests/
 │   ├── DotnetBackendSkeleton.UnitTests/         # Services and controllers in isolation
-│   ├── DotnetBackendSkeleton.IntegrationTests/  # Whole HTTP pipeline in memory, SQLite instead of PostgreSQL
-│   └── DotnetBackendSkeleton.AppHost.Tests/     # End-to-end through Aspire with a real PostgreSQL (needs Docker)
+│   └── DotnetBackendSkeleton.IntegrationTests/  # Whole HTTP pipeline in memory, SQLite instead of PostgreSQL
 ├── devops/k8s/            # Kubernetes manifests
 ├── docs/conventions.md    # Coding conventions and how-tos
 └── .github/               # CI workflow and Dependabot
@@ -73,9 +72,9 @@ Requests samples are available in [`DotnetBackendSkeleton.Api.http`](src/DotnetB
 
 ```bash
 dotnet test
-# without a container runtime, skip the Aspire end-to-end tests:
-dotnet test --filter "TestCategory!=RequiresDocker" --ignore-exit-code 8
 ```
+
+The tests need neither a container runtime nor a database.
 
 ## Start a new service from this skeleton
 
@@ -136,7 +135,7 @@ from the AppHost with `aspire publish` / `aspire deploy`.
 ## Continuous integration
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every push and pull request to `main`:
-formatting check, build, all tests (including Aspire end-to-end tests) with coverage, idempotent migration script, and
+formatting check, build, all tests with coverage, idempotent migration script, and
 container image build. Dependabot keeps NuGet packages and GitHub Actions up to date.
 
 ## Troubleshooting
@@ -144,8 +143,6 @@ container image build. Dependabot keeps NuGet packages and GitHub Actions up to 
 - **`Unable to load DLL 'e_sqlite3'` or other path errors on Windows**: the path is longer than 260 characters. Clone the
   repository closer to the drive root or [enable long paths](https://learn.microsoft.com/windows/win32/fileio/maximum-file-path-limitation).
 - **The AppHost fails to start PostgreSQL**: check that Docker/Podman is running.
-- **`Zero tests ran` (exit code 8)**: a test filter excluded every test of a project; add `--ignore-exit-code 8`.
-
 ---
 
 ## Service README template

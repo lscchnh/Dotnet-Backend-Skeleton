@@ -82,8 +82,6 @@ Conventions followed by the skeleton, and how to extend it without breaking them
 | --- | --- | --- |
 | `UnitTests` | A service or controller in isolation. Mocks with NSubstitute, SQLite in-memory for EF, `FakeTimeProvider`, `MetricCollector`. | None |
 | `IntegrationTests` | The whole HTTP pipeline in memory with `WebApplicationFactory`, PostgreSQL replaced by SQLite in-memory. | None |
-| `AppHost.Tests` | End-to-end through the Aspire AppHost, real PostgreSQL container. Category `RequiresDocker`. | Docker/Podman |
-
 - Framework: MSTest 4 on Microsoft.Testing.Platform (`dotnet test`).
 - Test names describe the behavior: `Method_expected_result_when_condition`.
 - Pass `TestContext.CancellationToken` to async calls.

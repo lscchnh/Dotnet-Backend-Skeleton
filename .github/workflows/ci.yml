@@ -43,7 +43,6 @@ jobs:
       - name: Build
         run: dotnet build --configuration $CONFIGURATION --no-restore
 
-      # Includes the Aspire end-to-end tests: GitHub-hosted Ubuntu runners provide Docker.
       - name: Test
         run: >
           dotnet test --configuration $CONFIGURATION --no-build

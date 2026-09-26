@@ -11,9 +11,7 @@ namespace DotnetBackendSkeleton.IntegrationTests;
 
 /// <summary>
 /// Hosts the whole API in memory, with PostgreSQL replaced by an in-memory SQLite database,
-/// so that the HTTP pipeline (routing, validation, serialization, problem details...) is tested without Docker.
-/// End-to-end tests against a real PostgreSQL live in DotnetBackendSkeleton.AppHost.Tests.
-/// </summary>
+/// so that the HTTP pipeline (routing, validation, serialization, problem details...) is tested without Docker./// </summary>
 public sealed class ApiFactory : WebApplicationFactory<Program>
 {
     private readonly SqliteConnection _connection = new("DataSource=:memory:");
