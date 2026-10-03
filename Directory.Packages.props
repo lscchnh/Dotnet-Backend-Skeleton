@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <AspireVersion>13.5.4</AspireVersion>
+    <AspireVersion>13.6.0</AspireVersion>
     <EfCoreVersion>10.0.12</EfCoreVersion>
     <AspNetCoreVersion>10.0.12</AspNetCoreVersion>
     <OpenTelemetryVersion>1.19.1</OpenTelemetryVersion>
