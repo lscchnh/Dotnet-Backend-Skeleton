@@ -6,8 +6,8 @@
     <AspireVersion>13.5.4</AspireVersion>
     <EfCoreVersion>10.0.12</EfCoreVersion>
     <AspNetCoreVersion>10.0.12</AspNetCoreVersion>
-    <OpenTelemetryVersion>1.19.1</OpenTelemetryVersion>
-    <OpenTelemetryInstrumentationVersion>1.19.0</OpenTelemetryInstrumentationVersion>
+    <OpenTelemetryVersion>1.20.1</OpenTelemetryVersion>
+    <OpenTelemetryInstrumentationVersion>1.20.1</OpenTelemetryInstrumentationVersion>
   </PropertyGroup>
 
   <!-- Aspire -->
